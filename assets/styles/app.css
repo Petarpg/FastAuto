@@ -1,3 +1,22 @@
 body {
     background-color: skyblue;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.login-form {
+    width: 90%;  /* Mobile first - wide form */
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+    margin-top: 50px;  /* Reduced top margin for mobile */
+}
+
+/* Adjustments for larger screens */
+@media (min-width: 768px) {
+    .login-form {
+        margin-top: 100px;
+    }
 }
