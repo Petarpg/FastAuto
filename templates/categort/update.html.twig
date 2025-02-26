@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="container">
+    <div class="form">
+        <div class="col-md-12">
+            <h1>Modifycategory</h1>
+            {{ form_start(form) }}
+            {{ form_row(form.name,{'attr':{'class':'form-control'}}) }}
+
+            <input type="submit" value="Modify" class="btn btn-primary">
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
