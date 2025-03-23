@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,7 +23,18 @@ class Product
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?int $price = null;
+    private ?float $price = null;
+
+    /**
+     * @var Collection<int, SubCategory>
+     */
+    #[ORM\ManyToMany(targetEntity: SubCategory::class, inversedBy: 'products')]
+    private Collection $subCategories;
+
+    public function __construct()
+    {
+        $this->subCategories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,14 +65,38 @@ class Product
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubCategory>
+     */
+    public function getSubCategories(): Collection
+    {
+        return $this->subCategories;
+    }
+
+    public function addSubCategory(SubCategory $subCategory): static
+    {
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories->add($subCategory);
+        }
+
+        return $this;
+    }
+
+    public function removeSubCategory(SubCategory $subCategory): static
+    {
+        $this->subCategories->removeElement($subCategory);
 
         return $this;
     }
