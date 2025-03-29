@@ -16,6 +16,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Price</th>
+                    <th>Stock</th>
                     <th>actions</th>
                 </tr>
             </thead>
@@ -24,11 +25,20 @@
                 <tr>
                     <td>{{ product.id }}</td>
                     <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
+                    <td>{{ product.description|slice(0, 60) }}...</td>
                     <td>{{ product.price }}</td>
                     <td>
-                        <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                        <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                        {% if product.stock > 0 %}
+                            <span class="badge bg-success">{{ product.stock }}</span>
+                        {% else %}
+                            <span class="badge bg-danger">{{ product.stock }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+
+                        <a class="btn btn-primary" href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
+                        <a class="btn btn-outline-primary" href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
+                        <a class="btn btn-outline-info" href="{{ path('app_product_add_stock', {'id': product.id}) }}">Add stock</a>
                     </td>
                 </tr>
             {% else %}
@@ -39,6 +49,6 @@
             </tbody>
         </table>
 
-        <a class="btn btn-outline-primary" href="{{ path('app_product_new') }}">Create new</a>
+        <a class="btn btn-success" href="{{ path('app_product_new') }}">Create new</a>
     </div>
 {% endblock %}
